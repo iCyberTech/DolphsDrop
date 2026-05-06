@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swiss Arabian — Luxury Perfumes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #C8A96A;
+    --gold-light: #E2CFA0;
+    --gold-dark: #8B6B35;
+    --cream: #F9F5EE;
+    --cream-dark: #EDE5D6;
+    --black: #0E0D0B;
+    --charcoal: #1C1A16;
+    --mid: #5A5347;
+    --text-muted: #9A8F7E;
+    --white: #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--black);
+    color: var(--cream);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    opacity: 0.6;
+  }
+
+  /* NAVBAR */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(14,13,11,0.95) 0%, transparent 100%);
+    transition: background 0.4s;
+  }
+  nav.scrolled { background: rgba(14,13,11,0.97); border-bottom: 1px solid rgba(200,169,106,0.15); }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); text-decoration: none;
+  }
+  .nav-logo span { color: var(--cream); }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--cream); text-decoration: none; font-weight: 300;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 1px; background: var(--gold);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  .nav-actions { display: flex; gap: 1.5rem; align-items: center; }
+  .nav-icon { color: var(--cream); font-size: 1.1rem; cursor: none; transition: color 0.3s; text-decoration: none; }
+  .nav-icon:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    height: 100vh; position: relative;
+    display: flex; align-items: center; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 50%, #2a1f0e 0%, #0E0D0B 70%);
+  }
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+    background-size: 20px 20px;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 4rem; max-width: 680px;
+    animation: fadeUp 1.2s ease both;
+  }
+  .hero-eyebrow {
+    font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem; font-weight: 300;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 300; line-height: 1.05;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+
+  .hero-desc {
+    font-size: 0.85rem; font-weight: 300; letter-spacing: 0.05em;
+    line-height: 1.9; color: var(--text-muted);
+    max-width: 420px; margin-bottom: 3rem;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 1rem;
+    padding: 1rem 2.5rem;
+    background: var(--gold); color: var(--black);
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    text-decoration: none; font-weight: 500;
+    transition: all 0.3s ease; border: 1px solid var(--gold);
+  }
+  .btn-primary:hover { background: transparent; color: var(--gold); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 1rem;
+    padding: 1rem 2.5rem;
+    background: transparent; color: var(--cream);
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    text-decoration: none; font-weight: 300;
+    border: 1px solid rgba(200,169,106,0.3);
+    transition: all 0.3s ease;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-buttons { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+
+  /* Hero right — decorative bottle */
+  .hero-visual {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    width: 45vw; height: 90vh;
+    display: flex; align-items: center; justify-content: center;
+    animation: fadeIn 1.8s ease both 0.4s;
+  }
+  .hero-visual svg { width: 100%; height: 100%; }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--text-muted); animation: fadeIn 2s ease both 1s;
+  }
+  .scroll-line {
+    width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollAnim 2s ease infinite;
+  }
+
+  /* MARQUEE BAND */
+  .marquee-band {
+    border-top: 1px solid rgba(200,169,106,0.2);
+    border-bottom: 1px solid rgba(200,169,106,0.2);
+    padding: 1rem 0; overflow: hidden;
+    background: rgba(200,169,106,0.04);
+  }
+  .marquee-inner {
+    display: flex; gap: 3rem;
+    animation: marquee 25s linear infinite;
+    width: max-content;
+  }
+  .marquee-item {
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); white-space: nowrap; font-weight: 300;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .marquee-item::after { content: '✦'; font-size: 0.5rem; opacity: 0.6; }
+
+  /* SECTION STYLES */
+  section { padding: 8rem 4rem; }
+
+  .section-label {
+    font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem; font-weight: 300;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::before { content: ''; display: block; width: 30px; height: 1px; background: var(--gold); }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300; line-height: 1.1;
+    letter-spacing: 0.02em;
+  }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+
+  /* COLLECTIONS */
+  .collections { background: var(--charcoal); }
+  .collections-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+  .collections-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  }
+  .collection-card {
+    position: relative; overflow: hidden; aspect-ratio: 3/4;
+    background: #1a1710; cursor: none;
+  }
+  .collection-card:first-child { grid-row: span 2; aspect-ratio: auto; }
+  .card-bg {
+    position: absolute; inset: 0;
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .collection-card:hover .card-bg { transform: scale(1.06); }
+
+  .card-gradient {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(14,13,11,0.9) 0%, transparent 60%);
+  }
+  .card-content {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 2rem;
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+  }
+  .collection-card:hover .card-content { transform: translateY(0); }
+
+  .card-category {
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.5rem; font-weight: 300;
+  }
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300; line-height: 1.1;
+    margin-bottom: 0.8rem;
+  }
+  .card-desc {
+    font-size: 0.75rem; color: var(--text-muted); font-weight: 300;
+    letter-spacing: 0.03em; line-height: 1.7;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+  }
+  .collection-card:hover .card-desc { opacity: 1; transform: translateY(0); }
+  .card-link {
+    display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); text-decoration: none; font-weight: 300;
+    opacity: 0; transition: opacity 0.4s ease 0.15s;
+  }
+  .collection-card:hover .card-link { opacity: 1; }
+
+  /* FEATURED PRODUCT */
+  .featured { background: var(--black); }
+  .featured-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: center;
+  }
+  .featured-visual {
+    position: relative; display: flex; justify-content: center;
+  }
+  .featured-bottle { width: 100%; max-width: 380px; }
+
+  .featured-glow {
+    position: absolute; width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,169,106,0.15) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    animation: pulse 3s ease infinite;
+  }
+  .featured-info .section-title { margin: 1rem 0 1.5rem; }
+  .featured-notes {
+    display: flex; gap: 2rem; margin: 2.5rem 0; flex-wrap: wrap;
+  }
+  .note-item {
+    display: flex; flex-direction: column; gap: 0.3rem; align-items: center;
+    padding: 1.2rem 1.5rem;
+    border: 1px solid rgba(200,169,106,0.2);
+    min-width: 90px;
+    transition: border-color 0.3s;
+  }
+  .note-item:hover { border-color: var(--gold); }
+  .note-type { font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
+  .note-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 400; color: var(--cream);
+  }
+  .featured-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; color: var(--gold); margin: 2rem 0;
+    font-weight: 300;
+  }
+  .featured-price span { font-size: 1rem; font-family: 'Jost', sans-serif; color: var(--text-muted); margin-left: 0.3rem; }
+
+  /* BESTSELLERS */
+  .bestsellers { background: var(--cream); color: var(--black); }
+  .bestsellers .section-label { color: var(--gold-dark); }
+  .bestsellers .section-label::before { background: var(--gold-dark); }
+  .bestsellers .section-title { color: var(--charcoal); }
+  .bestsellers .section-title em { color: var(--gold-dark); }
+
+  .products-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+    margin-top: 3.5rem;
+  }
+  .product-card { cursor: none; }
+  .product-img {
+    aspect-ratio: 3/4; background: var(--cream-dark);
+    position: relative; overflow: hidden; margin-bottom: 1.2rem;
+  }
+  .product-img svg { width: 100%; height: 100%; }
+  .product-tag {
+    position: absolute; top: 1rem; left: 1rem;
+    font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+    background: var(--gold); color: var(--black); padding: 0.3rem 0.7rem; font-weight: 500;
+  }
+  .product-overlay {
+    position: absolute; inset: 0; background: rgba(14,13,11,0.4);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s ease;
+  }
+  .product-card:hover .product-overlay { opacity: 1; }
+  .product-overlay a {
+    padding: 0.8rem 1.5rem; background: var(--cream); color: var(--black);
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    text-decoration: none; font-weight: 400;
+  }
+  .product-brand {
+    font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 0.3rem; font-weight: 300;
+  }
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 400; color: var(--charcoal);
+    margin-bottom: 0.4rem;
+  }
+  .product-type { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+  .product-price { font-size: 0.9rem; font-weight: 400; color: var(--charcoal); }
+
+  /* STORY / HERITAGE */
+  .heritage { background: var(--charcoal); position: relative; overflow: hidden; }
+  .heritage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .heritage-visual { position: relative; }
+  .heritage-img-stack { position: relative; }
+  .heritage-img-main {
+    width: 75%; aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #2a1f0e, #1a1208);
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .heritage-img-secondary {
+    width: 55%; aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #1a1208, #0E0D0B);
+    position: absolute; bottom: -3rem; right: 0;
+    border: 8px solid var(--charcoal);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .heritage-year {
+    position: absolute; top: -2rem; right: 4rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 7rem; font-weight: 300; color: rgba(200,169,106,0.08);
+    line-height: 1; pointer-events: none;
+  }
+  .heritage-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 3rem 0;
+  }
+  .stat-item { border-left: 1px solid rgba(200,169,106,0.3); padding-left: 1.5rem; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 300; color: var(--gold); line-height: 1;
+  }
+  .stat-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.4rem; }
+
+  /* NEWSLETTER */
+  .newsletter {
+    background: var(--gold); padding: 5rem 4rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 4rem;
+  }
+  .newsletter-text .section-label { color: var(--gold-dark); }
+  .newsletter-text .section-label::before { background: var(--gold-dark); }
+  .newsletter-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 300; color: var(--black); line-height: 1.1;
+  }
+  .newsletter-form {
+    display: flex; gap: 0; min-width: 420px;
+    border: 1px solid rgba(0,0,0,0.3);
+  }
+  .newsletter-form input {
+    flex: 1; padding: 1rem 1.5rem;
+    background: transparent; border: none; outline: none;
+    font-family: 'Jost', sans-serif; font-size: 0.8rem;
+    color: var(--black); letter-spacing: 0.05em;
+  }
+  .newsletter-form input::placeholder { color: rgba(14,13,11,0.5); }
+  .newsletter-form button {
+    padding: 1rem 2rem; background: var(--black); color: var(--gold);
+    border: none; cursor: none;
+    font-family: 'Jost', sans-serif; font-size: 0.65rem;
+    letter-spacing: 0.25em; text-transform: uppercase; font-weight: 400;
+    transition: background 0.3s;
+  }
+  .newsletter-form button:hover { background: var(--charcoal); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black); padding: 5rem 4rem 2rem;
+    border-top: 1px solid rgba(200,169,106,0.15);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem;
+  }
+  .footer-brand .nav-logo { font-size: 1.2rem; display: block; margin-bottom: 1.2rem; }
+  .footer-tagline { font-size: 0.8rem; color: var(--text-muted); line-height: 1.8; max-width: 260px; }
+  .footer-col h4 {
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem; font-weight: 300;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+  .footer-col a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 300; transition: color 0.3s; }
+  .footer-col a:hover { color: var(--cream); }
+  .footer-bottom {
+    border-top: 1px solid rgba(200,169,106,0.1); padding-top: 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.05em; }
+  .footer-socials { display: flex; gap: 1.5rem; }
+  .footer-socials a { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+  .footer-socials a:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes scrollAnim {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .float-anim { animation: float 6s ease-in-out infinite; }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Gold decorative line */
+  .gold-divider {
+    width: 60px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 1.5rem 0;
+  }
+
+  /* Ambient orbs */
+  .orb {
+    position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px);
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Swiss<span>Arabian</span></a>
+  <ul class="nav-links">
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">Bestsellers</a></li>
+    <li><a href="#">Heritage</a></li>
+    <li><a href="#">Oud</a></li>
+    <li><a href="#">Gifts</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#" class="nav-icon">⚲</a>
+    <a href="#" class="nav-icon">♡</a>
+    <a href="#" class="nav-icon">⊕ EN</a>
+    <a href="#" class="nav-icon">☷</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(200,169,106,0.08) 0%,transparent 70%);top:20%;right:20%;"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">New Signature Collection 2025</div>
+    <h1>The Art of<br><em>Arabian</em><br>Perfumery</h1>
+    <p class="hero-desc">Where ancient oud traditions meet modern Swiss precision. A journey through rare ingredients from across the Arabian Peninsula and beyond.</p>
+    <div class="hero-buttons">
+      <a href="#" class="btn-primary">Explore Collection →</a>
+      <a href="#" class="btn-secondary">Our Heritage</a>
+    </div>
+  </div>
+
+  <!-- Decorative SVG bottle illustration -->
+  <div class="hero-visual">
+    <svg viewBox="0 0 500 700" fill="none" xmlns="http://www.w3.org/2000/svg" class="float-anim">
+      <defs>
+        <radialGradient id="bottleGrad" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#C8A96A" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#0E0D0B" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#1a1512"/>
+          <stop offset="30%" stop-color="#2d2318"/>
+          <stop offset="60%" stop-color="#C8A96A" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#1a1512"/>
+        </linearGradient>
+        <linearGradient id="goldLine" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#E2CFA0"/>
+          <stop offset="50%" stop-color="#C8A96A"/>
+          <stop offset="100%" stop-color="#8B6B35"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="8" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Ambient glow -->
+      <ellipse cx="250" cy="350" rx="180" ry="250" fill="url(#bottleGrad)"/>
+
+      <!-- Bottle shadow -->
+      <ellipse cx="250" cy="620" rx="80" ry="20" fill="rgba(200,169,106,0.1)"/>
+
+      <!-- Cap -->
+      <rect x="210" y="160" width="80" height="18" rx="2" fill="url(#goldLine)"/>
+      <rect x="218" y="142" width="64" height="22" rx="3" fill="url(#goldLine)"/>
+      <rect x="226" y="128" width="48" height="16" rx="2" fill="#C8A96A"/>
+      <!-- Crown detail -->
+      <rect x="234" y="118" width="32" height="12" rx="1" fill="#E2CFA0"/>
+
+      <!-- Neck -->
+      <rect x="220" y="178" width="60" height="60" fill="url(#bodyGrad)" stroke="#C8A96A" stroke-width="0.5" stroke-opacity="0.4"/>
+      <rect x="215" y="234" width="70" height="10" fill="url(#goldLine)"/>
+
+      <!-- Main bottle body -->
+      <path d="M168 244 Q158 260 155 300 L155 520 Q155 545 180 555 L320 555 Q345 545 345 520 L345 300 Q342 260 332 244 Z"
+            fill="url(#bodyGrad)" stroke="rgba(200,169,106,0.3)" stroke-width="0.8"/>
+
+      <!-- Body highlight -->
+      <path d="M185 260 Q178 280 176 320 L176 510 Q176 528 190 534"
+            stroke="rgba(200,169,106,0.2)" stroke-width="1.5" fill="none"/>
+
+      <!-- Gold band top -->
+      <rect x="155" y="250" width="190" height="6" fill="url(#goldLine)" opacity="0.9"/>
+      <rect x="155" y="260" width="190" height="1" fill="#E2CFA0" opacity="0.4"/>
+
+      <!-- Label area -->
+      <rect x="175" y="290" width="150" height="200" fill="rgba(200,169,106,0.06)" stroke="rgba(200,169,106,0.25)" stroke-width="0.5"/>
+
+      <!-- Label border ornament -->
+      <rect x="181" y="296" width="138" height="188" fill="none" stroke="rgba(200,169,106,0.4)" stroke-width="0.5"/>
+
+      <!-- Label text -->
+      <text x="250" y="336" text-anchor="middle" fill="#E2CFA0" font-size="8" letter-spacing="4" font-family="Georgia, serif" opacity="0.9">SWISS ARABIAN</text>
+
+      <line x1="195" y1="345" x2="305" y2="345" stroke="rgba(200,169,106,0.4)" stroke-width="0.5"/>
+
+      <text x="250" y="370" text-anchor="middle" fill="#C8A96A" font-size="22" font-family="Georgia, serif" font-style="italic">Shaghaf</text>
+      <text x="250" y="388" text-anchor="middle" fill="#C8A96A" font-size="20" font-family="Georgia, serif" font-style="italic">Oud</text>
+
+      <line x1="195" y1="398" x2="305" y2="398" stroke="rgba(200,169,106,0.4)" stroke-width="0.5"/>
+
+      <!-- Arabesque ornament -->
+      <text x="250" y="418" text-anchor="middle" fill="rgba(200,169,106,0.5)" font-size="11" font-family="Georgia, serif">✦  ✦  ✦</text>
+
+      <text x="250" y="440" text-anchor="middle" fill="rgba(200,169,106,0.7)" font-size="7" letter-spacing="3" font-family="Georgia, serif">EAU DE PARFUM</text>
+      <text x="250" y="456" text-anchor="middle" fill="rgba(200,169,106,0.5)" font-size="7" letter-spacing="2" font-family="Georgia, serif">100 ml · 3.4 fl oz</text>
+
+      <!-- Gold band bottom -->
+      <rect x="155" y="490" width="190" height="6" fill="url(#goldLine)" opacity="0.8"/>
+
+      <!-- Bottom of bottle -->
+      <path d="M155 520 L155 545 Q155 558 180 558 L320 558 Q345 558 345 545 L345 520"
+            fill="url(#bodyGrad)" stroke="rgba(200,169,106,0.3)" stroke-width="0.8"/>
+      <rect x="155" y="555" width="190" height="4" rx="1" fill="url(#goldLine)" opacity="0.7"/>
+
+      <!-- Floating particles -->
+      <circle cx="140" cy="280" r="2" fill="#C8A96A" opacity="0.4"/>
+      <circle cx="370" cy="340" r="1.5" fill="#C8A96A" opacity="0.3"/>
+      <circle cx="120" cy="400" r="1" fill="#C8A96A" opacity="0.5"/>
+      <circle cx="390" cy="460" r="2" fill="#C8A96A" opacity="0.2"/>
+      <circle cx="150" cy="500" r="1.5" fill="#C8A96A" opacity="0.4"/>
+    </svg>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-band">
+  <div class="marquee-inner" id="marquee">
+    <span class="marquee-item">Luxury Oud Perfumes</span>
+    <span class="marquee-item">Swiss Craftsmanship</span>
+    <span class="marquee-item">Arabian Heritage</span>
+    <span class="marquee-item">Over 50 Years of Excellence</span>
+    <span class="marquee-item">Rare Ingredients</span>
+    <span class="marquee-item">Bespoke Fragrances</span>
+    <span class="marquee-item">Free UAE Shipping</span>
+    <span class="marquee-item">Luxury Oud Perfumes</span>
+    <span class="marquee-item">Swiss Craftsmanship</span>
+    <span class="marquee-item">Arabian Heritage</span>
+    <span class="marquee-item">Over 50 Years of Excellence</span>
+    <span class="marquee-item">Rare Ingredients</span>
+    <span class="marquee-item">Bespoke Fragrances</span>
+    <span class="marquee-item">Free UAE Shipping</span>
+  </div>
+</div>
+
+<!-- COLLECTIONS -->
+<section class="collections">
+  <div class="collections-header reveal">
+    <div>
+      <div class="section-label">Curated Collections</div>
+      <h2 class="section-title">Explore Our<br><em>Signature</em> Worlds</h2>
+    </div>
+    <a href="#" class="btn-secondary" style="margin-bottom:0.5rem">View All Collections →</a>
+  </div>
+
+  <div class="collections-grid">
+    <!-- Large card -->
+    <div class="collection-card" style="background:#0d0b07;">
+      <div class="card-bg" style="background:linear-gradient(135deg,#1a1005 0%,#2a1a08 50%,#0d0b07 100%); display:flex; align-items:center; justify-content:center;">
+        <svg width="200" height="340" viewBox="0 0 200 340" opacity="0.7">
+          <defs><linearGradient id="c1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1a1208"/><stop offset="50%" stop-color="#C8A96A" stop-opacity="0.5"/><stop offset="100%" stop-color="#1a1208"/></linearGradient></defs>
+          <rect x="80" y="60" width="40" height="15" rx="2" fill="#C8A96A"/>
+          <rect x="75" y="50" width="50" height="12" rx="2" fill="#E2CFA0"/>
+          <rect x="65" y="75" width="70" height="180" rx="8" fill="url(#c1)" stroke="#C8A96A" stroke-width="0.5" stroke-opacity="0.5"/>
+          <rect x="70" y="110" width="60" height="100" fill="rgba(200,169,106,0.05)" stroke="rgba(200,169,106,0.3)" stroke-width="0.5"/>
+          <text x="100" y="165" text-anchor="middle" fill="#C8A96A" font-size="14" font-family="Georgia,serif" font-style="italic">Shaghaf</text>
+          <rect x="65" y="255" width="70" height="6" rx="1" fill="#C8A96A" opacity="0.8"/>
+          <ellipse cx="100" cy="280" rx="40" ry="12" fill="#1a1208"/>
+        </svg>
+      </div>
+      <div class="card-gradient"></div>
+      <div class="card-content">
+        <div class="card-category">Oud & Musk</div>
+        <div class="card-title">Oud Collection</div>
+        <div class="card-desc">A journey into the soul of Arabia through ancient oud wood distilled to perfection.</div>
+        <a href="#" class="card-link">Discover →</a>
+      </div>
+    </div>
+
+    <!-- Smaller cards -->
+    <div class="collection-card" style="background:#0a0c0e;">
+      <div class="card-bg" style="background:linear-gradient(135deg,#0a0c12,#12161f); display:flex;align-items:center;justify-content:center;">
+        <svg width="120" height="160" viewBox="0 0 120 160" opacity="0.8">
+          <rect x="40" y="30" width="40" height="10" rx="2" fill="#8aafd4"/>
+          <rect x="30" y="40" width="60" height="100" rx="20" fill="rgba(100,140,200,0.3)" stroke="rgba(100,150,220,0.4)" stroke-width="0.5"/>
+          <text x="60" y="100" text-anchor="middle" fill="rgba(150,190,240,0.8)" font-size="9" font-family="Georgia,serif" font-style="italic">Breeze</text>
+        </svg>
+      </div>
+      <div class="card-gradient"></div>
+      <div class="card-content">
+        <div class="card-category">Fresh & Aquatic</div>
+        <div class="card-title">Swiss Breeze</div>
+        <div class="card-desc">Alpine freshness meets desert warmth.</div>
+        <a href="#" class="card-link">Discover →</a>
+      </div>
+    </div>
+
+    <div class="collection-card" style="background:#0e0a08;">
+      <div class="card-bg" style="background:linear-gradient(135deg,#160e08,#1f1408); display:flex;align-items:center;justify-content:center;">
+        <svg width="120" height="160" viewBox="0 0 120 160" opacity="0.8">
+          <rect x="45" y="25" width="30" height="8" rx="2" fill="#d4876a"/>
+          <rect x="35" y="33" width="50" height="90" rx="5" fill="rgba(200,100,60,0.3)" stroke="rgba(210,120,80,0.4)" stroke-width="0.5"/>
+          <text x="60" y="90" text-anchor="middle" fill="rgba(220,140,100,0.8)" font-size="9" font-family="Georgia,serif" font-style="italic">Rose Oud</text>
+        </svg>
+      </div>
+      <div class="card-gradient"></div>
+      <div class="card-content">
+        <div class="card-category">Floral Oriental</div>
+        <div class="card-title">Rose & Amber</div>
+        <div class="card-desc">Bulgarian rose entwined with golden amber.</div>
+        <a href="#" class="card-link">Discover →</a>
+      </div>
+    </div>
+
+    <div class="collection-card" style="background:#0c0e09;">
+      <div class="card-bg" style="background:linear-gradient(135deg,#0c100a,#14180f); display:flex;align-items:center;justify-content:center;">
+        <svg width="120" height="160" viewBox="0 0 120 160" opacity="0.8">
+          <rect x="45" y="25" width="30" height="8" rx="2" fill="#8ab88a"/>
+          <rect x="35" y="33" width="50" height="90" rx="5" fill="rgba(80,140,80,0.25)" stroke="rgba(100,160,100,0.4)" stroke-width="0.5"/>
+          <text x="60" y="90" text-anchor="middle" fill="rgba(130,190,130,0.8)" font-size="9" font-family="Georgia,serif" font-style="italic">Attar</text>
+        </svg>
+      </div>
+      <div class="card-gradient"></div>
+      <div class="card-content">
+        <div class="card-category">Classic Attars</div>
+        <div class="card-title">Heritage Attar</div>
+        <div class="card-desc">Tradition distilled into pure perfume oil.</div>
+        <a href="#" class="card-link">Discover →</a>
+      </div>
+    </div>
+
+    <div class="collection-card" style="background:#0d0a0e;">
+      <div class="card-bg" style="background:linear-gradient(135deg,#100c14,#180f1e); display:flex;align-items:center;justify-content:center;">
+        <svg width="120" height="160" viewBox="0 0 120 160" opacity="0.8">
+          <rect x="42" y="22" width="36" height="10" rx="3" fill="#b08ac8"/>
+          <rect x="34" y="32" width="52" height="95" rx="6" fill="rgba(140,80,180,0.25)" stroke="rgba(160,100,200,0.4)" stroke-width="0.5"/>
+          <text x="60" y="92" text-anchor="middle" fill="rgba(180,130,220,0.8)" font-size="9" font-family="Georgia,serif" font-style="italic">Musk</text>
+        </svg>
+      </div>
+      <div class="card-gradient"></div>
+      <div class="card-content">
+        <div class="card-category">White & Musk</div>
+        <div class="card-title">Velvet Musk</div>
+        <div class="card-desc">Skin-close softness with a lasting veil.</div>
+        <a href="#" class="card-link">Discover →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCT -->
+<section class="featured">
+  <div class="featured-grid">
+    <div class="featured-visual reveal">
+      <div class="featured-glow"></div>
+      <svg class="featured-bottle float-anim" viewBox="0 0 380 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fb" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#0d0b08"/>
+            <stop offset="35%" stop-color="#2a1f10"/>
+            <stop offset="65%" stop-color="#C8A96A" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#0d0b08"/>
+          </linearGradient>
+          <radialGradient id="fg" cx="50%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="rgba(200,169,106,0.3)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="190" cy="520" rx="110" ry="22" fill="rgba(200,169,106,0.08)"/>
+        <!-- Tall rectangular bottle -->
+        <rect x="100" y="100" width="180" height="16" rx="3" fill="url(#goldLine)"/>
+        <rect x="114" y="82" width="152" height="20" rx="2" fill="#1a1510" stroke="#C8A96A" stroke-width="0.5" stroke-opacity="0.5"/>
+        <rect x="130" y="60" width="120" height="24" rx="2" fill="url(#goldLine)"/>
+        <rect x="148" y="40" width="84" height="22" rx="2" fill="#C8A96A"/>
+        <rect x="158" y="26" width="64" height="16" rx="2" fill="#E2CFA0"/>
+        <path d="M90 116 L90 460 Q90 485 115 490 L265 490 Q290 485 290 460 L290 116 Z" fill="url(#fb)" stroke="rgba(200,169,106,0.35)" stroke-width="1"/>
+        <!-- Shine -->
+        <path d="M118 130 L118 460 Q118 476 128 480" stroke="rgba(200,169,106,0.15)" stroke-width="2" fill="none"/>
+        <!-- Gold bands -->
+        <rect x="90" y="122" width="200" height="5" fill="url(#goldLine)" opacity="0.9"/>
+        <rect x="90" y="462" width="200" height="5" fill="url(#goldLine)" opacity="0.9"/>
+        <rect x="90" y="130" width="200" height="1" fill="#E2CFA0" opacity="0.3"/>
+        <!-- Label -->
+        <rect x="112" y="160" width="156" height="270" fill="rgba(200,169,106,0.05)" stroke="rgba(200,169,106,0.3)" stroke-width="0.5"/>
+        <rect x="118" y="166" width="144" height="258" fill="none" stroke="rgba(200,169,106,0.3)" stroke-width="0.5"/>
+        <!-- Ornament top -->
+        <text x="190" y="194" text-anchor="middle" fill="rgba(200,169,106,0.5)" font-size="12" font-family="Georgia,serif">✦</text>
+        <line x1="125" y1="204" x2="255" y2="204" stroke="rgba(200,169,106,0.3)" stroke-width="0.5"/>
+        <text x="190" y="222" text-anchor="middle" fill="#E2CFA0" font-size="7" letter-spacing="5" font-family="Georgia,serif" opacity="0.8">SWISS ARABIAN</text>
+        <text x="190" y="258" text-anchor="middle" fill="#C8A96A" font-size="34" font-family="Georgia,serif" font-style="italic">Shaghaf</text>
+        <text x="190" y="280" text-anchor="middle" fill="#C8A96A" font-size="26" font-family="Georgia,serif" font-style="italic">Oud Abyad</text>
+        <line x1="125" y1="294" x2="255" y2="294" stroke="rgba(200,169,106,0.3)" stroke-width="0.5"/>
+        <text x="190" y="318" text-anchor="middle" fill="rgba(200,169,106,0.4)" font-size="20" font-family="Georgia,serif">✦  ✦  ✦</text>
+        <text x="190" y="348" text-anchor="middle" fill="rgba(200,169,106,0.6)" font-size="7.5" letter-spacing="3" font-family="Georgia,serif">EAU DE PARFUM</text>
+        <text x="190" y="368" text-anchor="middle" fill="rgba(200,169,106,0.4)" font-size="7.5" letter-spacing="2" font-family="Georgia,serif">75 ml · 2.5 fl oz</text>
+        <!-- Bottom ornament -->
+        <line x1="125" y1="382" x2="255" y2="382" stroke="rgba(200,169,106,0.2)" stroke-width="0.5"/>
+        <text x="190" y="402" text-anchor="middle" fill="rgba(200,169,106,0.3)" font-size="11" font-family="Georgia,serif">✦</text>
+        <!-- Bottom -->
+        <rect x="90" y="470" width="200" height="20" rx="4" fill="#1a1510" stroke="#C8A96A" stroke-width="0.5" stroke-opacity="0.3"/>
+      </svg>
+    </div>
+
+    <div class="featured-info reveal">
+      <div class="section-label">Signature Fragrance</div>
+      <h2 class="section-title">Shaghaf Oud<br><em>Abyad</em></h2>
+      <div class="gold-divider"></div>
+      <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.9;font-weight:300;">A mesmerizing fusion of pure white oud and creamy sandalwood, elevated by a radiant floral heart of peony and iris. The embodiment of refined Arabian luxury for the modern connoisseur.</p>
+
+      <div class="featured-notes">
+        <div class="note-item">
+          <span class="note-type">Top</span>
+          <span class="note-name">Bergamot</span>
+        </div>
+        <div class="note-item">
+          <span class="note-type">Heart</span>
+          <span class="note-name">White Oud</span>
+        </div>
+        <div class="note-item">
+          <span class="note-type">Base</span>
+          <span class="note-name">Sandalwood</span>
+        </div>
+        <div class="note-item">
+          <span class="note-type">Base</span>
+          <span class="note-name">Musk</span>
+        </div>
+      </div>
+
+      <div class="featured-price">AED 295 <span>/ 75ml EDP</span></div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="#" class="btn-primary">Add to Bag →</a>
+        <a href="#" class="btn-secondary">Full Details</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BESTSELLERS -->
+<section class="bestsellers">
+  <div class="reveal">
+    <div class="section-label">Customer Favourites</div>
+    <h2 class="section-title">Our <em>Bestselling</em> Fragrances</h2>
+  </div>
+
+  <div class="products-grid">
+    <!-- Product 1 -->
+    <div class="product-card reveal">
+      <div class="product-img" style="background:linear-gradient(135deg,#f5efe6,#e8dcc8);">
+        <svg width="100%" height="100%" viewBox="0 0 200 280">
+          <defs><linearGradient id="p1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#c4a46a"/><stop offset="50%" stop-color="#d4b478" stop-opacity="0.6"/><stop offset="100%" stop-color="#c4a46a"/></linearGradient></defs>
+          <rect x="80" y="55" width="40" height="10" rx="2" fill="#c4a46a"/>
+          <rect x="75" y="44" width="50" height="13" rx="2" fill="#d4b478"/>
+          <rect x="60" y="65" width="80" height="160" rx="6" fill="url(#p1)" stroke="rgba(140,100,40,0.4)" stroke-width="0.5"/>
+          <rect x="68" y="95" width="64" height="90" fill="rgba(255,255,255,0.15)" stroke="rgba(140,100,40,0.3)" stroke-width="0.5"/>
+          <text x="100" y="148" text-anchor="middle" fill="rgba(80,50,10,0.8)" font-size="11" font-family="Georgia,serif" font-style="italic">Oud 24</text>
+          <text x="100" y="163" text-anchor="middle" fill="rgba(80,50,10,0.6)" font-size="7" letter-spacing="2" font-family="Georgia,serif">HOURS</text>
+          <ellipse cx="100" cy="243" rx="50" ry="10" fill="rgba(140,100,40,0.2)"/>
+        </svg>
+        <div class="product-tag">Bestseller</div>
+        <div class="product-overlay"><a href="#">Quick View</a></div>
+      </div>
+      <div class="product-brand">Swiss Arabian</div>
+      <div class="product-name">Oud 24 Hours</div>
+      <div class="product-type">Eau de Parfum · 100ml</div>
+      <div class="product-price">AED 199</div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card reveal" style="transition-delay:0.1s">
+      <div class="product-img" style="background:linear-gradient(135deg,#e8e0ef,#d4c8e4);">
+        <svg width="100%" height="100%" viewBox="0 0 200 280">
+          <rect x="78" y="52" width="44" height="12" rx="6" fill="#a080c0"/>
+          <rect x="60" y="64" width="80" height="165" rx="40" fill="rgba(140,90,180,0.35)" stroke="rgba(140,90,180,0.5)" stroke-width="0.5"/>
+          <text x="100" y="158" text-anchor="middle" fill="rgba(80,40,120,0.8)" font-size="10" font-family="Georgia,serif" font-style="italic">Mukhallat</text>
+          <ellipse cx="100" cy="247" rx="45" ry="9" fill="rgba(140,90,180,0.15)"/>
+        </svg>
+        <div class="product-overlay"><a href="#">Quick View</a></div>
+      </div>
+      <div class="product-brand">Swiss Arabian</div>
+      <div class="product-name">Mukhallat</div>
+      <div class="product-type">Eau de Parfum · 75ml</div>
+      <div class="product-price">AED 249</div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card reveal" style="transition-delay:0.2s">
+      <div class="product-img" style="background:linear-gradient(135deg,#fce8dc,#f5d0bc);">
+        <svg width="100%" height="100%" viewBox="0 0 200 280">
+          <rect x="82" y="50" width="36" height="18" rx="2" fill="#d4826a"/>
+          <rect x="55" y="68" width="90" height="155" rx="4" fill="rgba(200,90,60,0.3)" stroke="rgba(200,100,70,0.45)" stroke-width="0.5"/>
+          <rect x="65" y="100" width="70" height="80" fill="rgba(255,255,255,0.12)" stroke="rgba(200,100,70,0.3)" stroke-width="0.5"/>
+          <text x="100" y="146" text-anchor="middle" fill="rgba(120,40,20,0.8)" font-size="10" font-family="Georgia,serif" font-style="italic">Wardi</text>
+          <ellipse cx="100" cy="240" rx="52" ry="10" fill="rgba(200,90,60,0.15)"/>
+        </svg>
+        <div class="product-tag">New</div>
+        <div class="product-overlay"><a href="#">Quick View</a></div>
+      </div>
+      <div class="product-brand">Swiss Arabian</div>
+      <div class="product-name">Wardi</div>
+      <div class="product-type">Eau de Parfum · 50ml</div>
+      <div class="product-price">AED 175</div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product-card reveal" style="transition-delay:0.3s">
+      <div class="product-img" style="background:linear-gradient(135deg,#e0ecf8,#c8dff0);">
+        <svg width="100%" height="100%" viewBox="0 0 200 280">
+          <rect x="83" y="48" width="34" height="22" rx="11" fill="#6a9ec8"/>
+          <rect x="58" y="70" width="84" height="158" rx="10" fill="rgba(60,120,180,0.28)" stroke="rgba(80,140,200,0.4)" stroke-width="0.5"/>
+          <text x="100" y="155" text-anchor="middle" fill="rgba(20,60,120,0.8)" font-size="10" font-family="Georgia,serif" font-style="italic">Al Wajood</text>
+          <ellipse cx="100" cy="244" rx="48" ry="10" fill="rgba(60,120,180,0.15)"/>
+        </svg>
+        <div class="product-overlay"><a href="#">Quick View</a></div>
+      </div>
+      <div class="product-brand">Swiss Arabian</div>
+      <div class="product-name">Al Wajood</div>
+      <div class="product-type">Eau de Parfum · 100ml</div>
+      <div class="product-price">AED 320</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:4rem;">
+    <a href="#" class="btn-secondary" style="border-color:rgba(200,169,106,0.4);color:var(--charcoal);">View All Products →</a>
+  </div>
+</section>
+
+<!-- HERITAGE -->
+<section class="heritage">
+  <div class="heritage-year">1974</div>
+  <div class="heritage-grid">
+    <div class="heritage-visual reveal">
+      <div class="heritage-img-stack">
+        <div class="heritage-img-main">
+          <svg width="80%" height="80%" viewBox="0 0 200 280" opacity="0.7">
+            <text x="100" y="80" text-anchor="middle" fill="rgba(200,169,106,0.6)" font-size="10" letter-spacing="4" font-family="Georgia,serif">SINCE 1974</text>
+            <line x1="30" y1="95" x2="170" y2="95" stroke="rgba(200,169,106,0.3)" stroke-width="0.5"/>
+            <text x="100" y="130" text-anchor="middle" fill="rgba(200,169,106,0.8)" font-size="32" font-family="Georgia,serif" font-style="italic">SA</text>
+            <text x="100" y="160" text-anchor="middle" fill="rgba(200,169,106,0.5)" font-size="9" letter-spacing="4" font-family="Georgia,serif">SWISS ARABIAN</text>
+            <line x1="30" y1="174" x2="170" y2="174" stroke="rgba(200,169,106,0.3)" stroke-width="0.5"/>
+            <text x="100" y="210" text-anchor="middle" fill="rgba(200,169,106,0.3)" font-size="8" letter-spacing="2" font-family="Georgia,serif">THE ART OF ARABIAN</text>
+            <text x="100" y="226" text-anchor="middle" fill="rgba(200,169,106,0.3)" font-size="8" letter-spacing="2" font-family="Georgia,serif">PERFUMERY</text>
+          </svg>
+        </div>
+        <div class="heritage-img-secondary">
+          <svg width="80%" height="80%" viewBox="0 0 160 120" opacity="0.6">
+            <text x="80" y="50" text-anchor="middle" fill="rgba(200,169,106,0.7)" font-size="9" letter-spacing="3" font-family="Georgia,serif">DUBAI</text>
+            <text x="80" y="68" text-anchor="middle" fill="rgba(200,169,106,0.5)" font-size="8" letter-spacing="2" font-family="Georgia,serif">UAE · SWITZERLAND</text>
+            <text x="80" y="86" text-anchor="middle" fill="rgba(200,169,106,0.4)" font-size="18" font-family="Georgia,serif" font-style="italic">✦</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title">Fifty Years of<br><em>Fragrant</em> Heritage</h2>
+      <div class="gold-divider"></div>
+      <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.9;font-weight:300;margin-bottom:1.5rem;">Founded in 1974, Swiss Arabian Perfumes Group has been crafting extraordinary fragrances that bridge the ancient world of Arabian oud and the precision of Swiss artisanship. From our home in Dubai, we bring you scents that tell the story of a timeless culture.</p>
+      <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.9;font-weight:300;">Our master perfumers travel across the globe to source the rarest ingredients — oud from Assam, rose from Taif, sandalwood from Mysore — blending them into compositions that endure for decades.</p>
+
+      <div class="heritage-stats">
+        <div class="stat-item">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">Years of Excellence</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Unique Fragrances</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">40+</div>
+          <div class="stat-label">Countries Worldwide</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">12M+</div>
+          <div class="stat-label">Happy Customers</div>
+        </div>
+      </div>
+
+      <a href="#" class="btn-primary" style="margin-top:1rem;">Discover Our Heritage →</a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter reveal">
+  <div class="newsletter-text">
+    <div class="section-label" style="color:var(--gold-dark);">Exclusive Access</div>
+    <div class="newsletter-title">Join the<br>Inner Circle</div>
+  </div>
+  <div>
+    <p style="font-size:0.8rem;color:rgba(14,13,11,0.6);margin-bottom:1.5rem;max-width:320px;line-height:1.8;">Be the first to discover new collections, limited editions, and exclusive offers delivered to your door across the UAE.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Your email address">
+      <button>Subscribe</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">Swiss<span>Arabian</span></a>
+      <p class="footer-tagline">Bridging the ancient art of Arabian perfumery with modern Swiss precision since 1974.</p>
+      <div style="margin-top:1.5rem;display:flex;align-items:center;gap:0.8rem;">
+        <div style="width:6px;height:6px;background:var(--gold);border-radius:50%;"></div>
+        <span style="font-size:0.7rem;color:var(--text-muted);letter-spacing:0.1em;">Dubai, United Arab Emirates</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Bestsellers</a></li>
+        <li><a href="#">Oud Collection</a></li>
+        <li><a href="#">Gift Sets</a></li>
+        <li><a href="#">Attars</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Discover</h4>
+      <ul>
+        <li><a href="#">Our Heritage</a></li>
+        <li><a href="#">Ingredients</a></li>
+        <li><a href="#">Perfume Guide</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Stores</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Track Order</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Swiss Arabian Perfumes Group. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">TikTok</a>
+      <a href="#">YouTube</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+  function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animRing); }
+  animRing();
+  document.querySelectorAll('a,button,.collection-card,.product-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width='18px'; cursor.style.height='18px'; ring.style.width='50px'; ring.style.height='50px'; ring.style.opacity='0.3'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width='10px'; cursor.style.height='10px'; ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='0.6'; });
+  });
+
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
